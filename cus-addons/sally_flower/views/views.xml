@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        
+        <record id="sally_flower_view_form" model="ir.ui.view">
+            <field name="name">sally_flower_view_form</field>
+            <field name="model">sally.flower</field>
+            <field name="arch" type="xml">
+                <form string="Sally Flower">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="common_name"/>   
+                                <field name="scientific_name"/>   
+                                <field name="season_start_date"/>
+                                <field name="season_end_date"/>
+                                <field name="name" string="Product Name"/>
+                            </group>
+                            <group>
+                                <field name="watering_frequency"/>
+                                <field name="watering_amount"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="partner_id"/>
+                            <field name="email"/>
+                        </group>
+                        <notebook>
+                            <page string="Caretakers">
+                                <field name="partner_ids" context="{'created_from_embedded_views': True}">
+                                    <kanban>
+                                        <templates>
+                                            <t t-name="kanban-box">
+                                                <div class="oe_kanban_global_click">
+                                                    <div class="oe_kanban_details">
+                                                        <field name="name"/>
+                                                        <field name="email"/>
+                                                    </div>
+                                                </div>
+                                            </t>
+                                        </templates>
+                                    </kanban>
+                                    <form>
+                                        <sheet>
+                                            <group>
+                                                <group>
+                                                    <field name="name"/>
+                                                </group>
+                                                <group>
+                                                    <field name="email"/>
+                                                </group>
+                                            </group>
+                                        </sheet>
+                                    </form>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+       
+
+        <record id="sally_flower_view_tree" model="ir.ui.view">
+            <field name="name">sally_flower_view_tree</field>
+            <field name="model">sally.flower</field>
+            <field name="arch" type="xml">
+                <tree string="Sally Flower">
+                    <field name="common_name"/>
+                    <field name="scientific_name"/>
+                    <field name="season_start_date" width="100px"/>
+                    <field name="season_end_date" width="100px"/>
+                    <field name="watering_frequency" optional="hide"/>
+                    <field name="watering_amount" optional="hide"/>
+                </tree>
+            </field>
+        </record>
+        
+        <record id="sally_flower_action" model="ir.actions.act_window">
+            <field name="name">Sally Flower</field>
+            <field name="res_model">sally.flower</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+        </record>
+
+
+        <!-- <record id="product_template_form" model ="ir.ui.view">
+          <field name="name">product.template.form</field>
+          <field name="model">product.template</field>
+          <field name="inherit_id" ref="product.product_template_only_form_view" />
+          <field name="arch" type="xml">
+              <xpath expr="//field[@name='route_ids']" position="after">
+                 <group string="Traceability" name="traceability" attrs="{'invisible': [('type', '=', 'consu')]}" modifiers="{&quot;invisible&quot;: [[&quot;type&quot;, &quot;=&quot;, &quot;consu&quot;]]}">
+                        <field name="tracking" widget="radio" attrs="{'invisible': [('type', '=', 'service')]}" on_change="1" modifiers="{&quot;invisible&quot;: [[&quot;type&quot;, &quot;=&quot;, &quot;service&quot;]], &quot;required&quot;: true}"/>
+                  </group>
+              </xpath>
+          </field>
+      </record> -->
+
+       
+
+        <menuitem id="sally_flower_root" name="Sally Flower" action="sally_flower_action"/>
+       
+
+    </data>
+</odoo>

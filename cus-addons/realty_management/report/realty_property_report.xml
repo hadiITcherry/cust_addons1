@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<data>
+<template id="property_sheet">
+    <t t-call="web.html_container">
+        <t t-foreach="docs" t-as="o">
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <h1 t-out="o.name"/>
+                    <hr/>
+                    <p t-out="o.consturction_date"/>
+                    <p t-out="o.rent"/>
+                    <p t-out="o.surface"/>
+                    <p t-out="o.rooms"/>
+                    <p t-out="o.parking_slots"/>
+                    <p t-out="o.furnishing"/>
+                </div>
+            </t>
+        </t>
+    </t>
+</template>
+</data>
+</odoo>

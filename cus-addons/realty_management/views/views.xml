@@ -1,0 +1,278 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+
+    <record model="ir.ui.view" id="realty_property_tree_view">
+      <field name="name">Realty Properties</field>
+      <field name="model">realty.property</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name" width="100px"/>
+          <field name="consturction_date" width="100px"/>
+          <field name="rent" width="100px"/>
+          <field name="rooms" width="100px"/>
+          <field name="available" width="100px"/>
+          <field name="is_rented" width="100px"/>
+        </tree>
+      </field>
+    </record>
+
+     <record model="ir.ui.view" id="realty_property_form_view">
+      <field name="name">Realty Property Form </field>
+      <field name="model">realty.property</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+          <div class="oe_button_box" name="button_box">
+                        <button name="action_custom_url_property"
+                                string="URL"
+                                icon="fa-external-link"
+                                class="oe_stat_button"
+                                type="object"
+                        />
+            </div>
+            <group>
+                <group>
+                <field name="name"/>
+                <field name="consturction_date"/>
+                <field name="rent"/>
+                <field name="rooms"/>
+                <field name="parking_slots"/>
+                </group>
+                <group>
+                  <field name="surface"/>
+                  <field name="furnishing"/>
+                  <field name="address"/>
+                  <field name="available"/>
+                  <field name="is_rented"/>
+                </group>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="realty_property_action">
+      <field name="name">Realty Properties Window</field>
+      <field name="res_model">realty.property</field>
+    </record>
+
+    <record model="ir.ui.view" id="realty_tenant_tree_view">
+      <field name="name">Realty Tenants</field>
+      <field name="model">realty.tenant</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name" width="100px"/>
+          <field name="phone" width="100px"/>
+          <field name="email" width="100px"/>
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="realty_tenant_form_view">
+      <field name="name">Realty Tenanties Form </field>
+      <field name="model">realty.tenant</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <group>
+                <group>
+                <field name="partner_id" widget="res_partner_many2one"
+                           context="{'show_address': 1}"
+                           options='{"always_reload": True}'/>
+                </group>
+                <group>
+                  <field name="name"/>
+                  <field name="phone"/>
+                  <field name="email"/>
+                </group>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="realty_tenant_action">
+      <field name="name">Realty Tenants Window</field>
+      <field name="res_model">realty.tenant</field>
+    </record>
+
+    <record model="ir.ui.view" id="realty_tenancy_tree_view">
+      <field name="name">Realty Tenancies</field>
+      <field name="model">realty.tenancy</field>
+      <field name="arch" type="xml">
+        <tree>
+            <field name="property_ids" string="Property" widget="many2many_tags"/>
+            <field name="tenant_ids" string="Tenant" widget="many2many_tags"/>
+            <field name="contract_name"/>
+            <field name="state"/>
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="realty_tenancy_form_view">
+      <field name="name">Realty Tenancies Form </field>
+      <field name="model">realty.tenancy</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+          <div class="oe_button_box" name="button_box">
+                        <button name="action_custom_url_tenancy"
+                                string="URL"
+                                icon="fa-external-link"
+                                class="oe_stat_button"
+                                type="object"
+                        />
+                        <button name="action_cancel_tenancy"
+                                string="Cancel Tenancy"
+                                icon="fa-flag"
+                                class="oe_stat_button"
+                                type="object"
+                        />
+                    </div>
+             <group>
+                  <group>
+                    <field name="property_ids" widget="many2many_tags"/>
+                    <field name="tenant_ids" widget="many2many_tags"/>
+                    <field name="contract_name"/>
+                  </group>
+                  <group>
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+                    <field name="state"/>
+                  </group>
+              </group>
+            <notebook>
+              <page string="Tenancy Lines">
+                  <form>
+                    <sheet>
+                    <group>
+                      <group>
+                        <field name="product"/>
+                        <field name="quantity"/>
+                      </group>
+                      <group>
+                        <field name="price"/>
+                        <field name="total_amount"/>
+                      </group>
+                    </group>
+                    </sheet>
+                  </form>
+                </page>
+              </notebook>
+            </sheet>
+            </form>
+          </field>
+        </record>
+
+    <!-- Separate Action Views for Tenancies -->
+
+    <record id='terminated_tenancies_action' model='ir.actions.act_window'>
+        <field name="name">Realty Terminated Tenancies Window</field>
+        <field name="res_model">realty.tenancy</field>
+        <field name="context">{}</field>
+        <field name='domain'>[('state', '=', 'terminated')]</field>
+    </record>
+
+    <record id='draft_ongoing_tenancies_action' model='ir.actions.act_window'>
+        <field name="name">Realty Draft/Ongoing Tenancies Window</field>
+        <field name="res_model">realty.tenancy</field>
+        <field name="context">{}</field>
+        <field name='domain'>[('state' ,'!=', 'terminated')]</field>
+    </record>
+
+   
+
+    <!-- Inherit Partner -->
+
+    <record id="view_partner_form_inherit" model="ir.ui.view">
+            <field name="name">view_order_form_inherit</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                    <field name="phone" position="attributes">
+                      <attribute name="required">1</attribute>
+                    </field>
+                    <field name="street" position="attributes">
+                      <attribute name="required">1</attribute>
+                    </field>
+                    <xpath expr="//notebook" position="inside">
+                          <page string="Additional Partner Fields">
+                               <form>
+                                  <sheet>
+                                    <group>
+                                      <group>
+                                        <field name="dob"/>
+                                        <field name="pob"/>
+                                      </group>
+                                      <group>
+                                        <field name="nationality"/>
+                                      </group>
+                                    </group>
+                                  </sheet>
+                                </form>
+                          </page>
+                    </xpath>
+            </field>
+        </record>
+
+  
+   
+    <!-- Activate Tenancy -->
+
+    <record model="ir.actions.server" id="action_change_state">
+      <field name="name">Activate Tenancy</field>
+      <field name="model_id" ref="model_realty_tenancy"/>
+      <field name="state">code</field>
+      <field name="code">action = records.change_state()</field>
+    </record>
+
+    <!--  Terminate Tenancy  -->
+    <record model="ir.actions.server" id="action_terminate_state">
+      <field name="name">Terminate Tenancy</field>
+      <field name="model_id" ref="model_realty_tenancy"/>
+      <field name="state">code</field>
+      <field name="code">action = records.terminate_state()</field>
+    </record>
+
+
+    <record id="report_properties" model="ir.actions.report">
+            <field name="name">Properties Report</field>
+            <field name="model">realty.property</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">realty_management.property_sheet</field>
+            <field name="report_file">realty_management.property_sheet</field>
+            <field name="binding_model_id" ref="model_realty_property"/>
+            <field name="binding_type">report</field>
+      </record>
+
+    <!-- Cron Server Action-->
+
+     <record id="ir_cron_tenancy_update_state" model="ir.cron">
+            <field name="name">Tenancy: update state</field>
+            <field name="model_id" ref="model_realty_tenancy"/>
+            <field name="type">ir.actions.server</field>
+            <field name="state">code</field>
+            <field name="code">model.update_tenancy_state()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+        </record>
+
+    <!-- Top menu item -->
+
+    <menuitem name="Realty Management" id="realty_property_root" action="realty_property_action"/>
+
+    <!-- parrent items -->
+
+    <menuitem id="realty_tenant" parent="realty_property_root" name="Tenants"
+                  action="realty_tenant_action"/>
+    <menuitem id="realty_tenancy" parent="realty_property_root" name="Tenancies"/>
+    
+    <!---  Child items -->
+
+    <menuitem id="realty_tenancy_child_1" name="Terminated Tenancies" parent="realty_tenancy" action="terminated_tenancies_action"/>
+    <menuitem id="realty_tenancy_child_2" name="Draft/Ongoing Tenancies" parent="realty_tenancy" action="draft_ongoing_tenancies_action"/>
+
+  </data>
+</odoo>

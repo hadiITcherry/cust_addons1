@@ -1,0 +1,177 @@
+<odoo>
+  <data>
+    <record model="ir.ui.view" id="odoo_api_testing_tree">
+      <field name="name">odoo_api_testing list</field>
+      <field name="model">odoo.api.testing</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="value"/>
+          <field name="value2"/>
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="odoo_api_testing_form_view">
+      <field name="name">Odoo api Form </field>
+      <field name="model">odoo.api.testing</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+             <div class="oe_button_box" name="button_box">
+                        <button name="sendReq"
+                                string="Send Request"
+                                icon="fa-external-link"
+                                class="oe_stat_button"
+                                type="object"
+                        />
+            </div>
+            <group>
+                <group>
+                <field name="name"/>
+                <field name="value"/>
+                <field name="value2"/>
+                <field name="description"/>
+                <field name="user_id"/>
+                <field name="image" widget="many2many_binary"/>
+                </group>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    
+
+    <record model="ir.actions.act_window" id="odoo_api_action">
+      <field name="name">Odoo api Window</field>
+      <field name="res_model">odoo.api.testing</field>
+    </record>
+
+    <record model="ir.actions.server" id="action_notify">
+      <field name="name">Notify State</field>
+      <field name="model_id" ref="model_odoo_api_testing"/>
+      <field name="state">code</field>
+      <field name="code">action = records.notify()</field>
+    </record>
+
+     <record model="ir.actions.server" id="action_sendreq">
+      <field name="name">Send Request</field>
+      <field name="model_id" ref="model_odoo_api_testing"/>
+      <field name="state">code</field>
+      <field name="code">action = records.sendReq()</field>
+    </record>
+
+    <record model="ir.ui.view" id="product_specification_tree">
+      <field name="name">product specification list</field>
+      <field name="model">product.specification</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="product_id"/>
+          <field name="size"/>
+         <field name="image" widget="many2many_binary"/>
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="product_specification_form_view">
+      <field name="name">Product Specifiaction Form </field>
+      <field name="model">product.specification</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <group>
+                <group>
+                <field name="product_id"/>
+                <field name="size"/>
+                <field name="image" widget="many2many_binary"/>
+                </group>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="product_specification_action">
+      <field name="name">Product Specification Window</field>
+      <field name="res_model">product.specification</field>
+    </record>
+    
+
+  <record model="ir.ui.view" id="vip_subscribe_tree_view">
+      <field name="name">vip list</field>
+      <field name="model">vip.subscribe</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="subscriber_id"/>
+          <field name="cost"/>
+          <field name="start_date"/>
+         <field name="end_date"/>
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="vip_subscribe_form_view">
+      <field name="name"> vip Form </field>
+      <field name="model">vip.subscribe</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <group>
+                <group>
+                <field name="subscriber_id"/>
+                <field name="cost"/>
+                <field name="start_date"/>
+                <field name="end_date"/>
+                </group>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+  
+        
+    
+  <record model="ir.actions.act_window" id="vip_subscribe_action">
+      <field name="name">Vip Subscription Window</field>
+      <field name="res_model">vip.subscribe</field>
+    </record>
+    
+    <record id="view_product_form_inherit" model="ir.ui.view">
+
+	        <field name="name">product.template.common.form.inherit</field>
+
+	        <field name="model">product.template</field>
+
+	        <field name="inherit_id" ref="product.product_template_form_view"/>
+
+	        <field name="arch" type="xml">
+
+	            <xpath expr="//page[1]" position="inside">
+
+	                <group>
+
+	                    <field name="vip"/>
+                      <field name="vip_price"/>
+	                    <field name="sale_price"/>
+
+	                </group>
+
+	            </xpath>
+
+	        </field>
+
+	    </record> 
+    
+
+
+    
+    <menuitem name="odoo_api_testing" id="odoo_api_testing_root" action="odoo_api_action"/>
+
+
+    <menuitem name="product_specification" parent="odoo_api_testing_root" id="product_specification_submenu"
+    action = "product_specification_action"/>
+    <menuitem name="vip_subscribe" parent="odoo_api_testing_root" id="pvip_subscribe_submenu"
+    action = "vip_subscribe_action"/>
+  </data>
+</odoo>
